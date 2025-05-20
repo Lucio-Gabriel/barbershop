@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -10,3 +11,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{user}', [UserController::class, 'show']);
+
+Route::get('/services', [ServiceController::class, 'index']);
+Route::get('/services/{service}', [ServiceController::class, 'index']);
