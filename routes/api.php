@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 // })->middleware('auth:sanctum');
 
 Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{user}', [UserController::class, 'show']);
+Route::get('/users/{user}', [UserController::class, 'show']);   
 
 Route::get('/services', [ServiceController::class, 'index']);
 Route::get('/services/{service}', [ServiceController::class, 'index']);
