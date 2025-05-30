@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ServiceController extends Controller
 {
@@ -13,14 +14,27 @@ class ServiceController extends Controller
         return ServiceResource::collection(Service::get());
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name'        => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:255',
+            'time'        => 'required|numeric',
+            'price'       => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $created = Service::create($validator->validated());
+
+        return (new ServiceResource($created))
+            ->additional(['message' => 'Novo serviço criado com sucesso!'])
+            ->response()
+            ->setStatusCode(201);
     }
 
     public function show(string $id)
@@ -28,18 +42,44 @@ class ServiceController extends Controller
         return new ServiceResource(Service::where('id', $id)->first());
     }
 
-    public function edit(string $id)
+    public function update(Request $request, Service $service)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name'        => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:255',
+            'time'        => 'required|numeric',
+            'price'       => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $validated = $validator->validated();
+
+        $updated = $service->update([
+            'name'        => $validated['name'],
+            'description' => $validated['description'],
+            'time'        => $validated['time'],
+            'price'       => $validated['price'],
+        ]);
+
+        return (new ServiceResource($service))
+            ->additional(['message' => 'Serviço atualizado com sucesso!'])
+            ->response()
+            ->setStatusCode(201);
     }
 
-    public function update(Request $request, string $id)
+    public function destroy(Service $service)
     {
-        //
-    }
+        $deleted = $service->delete();
 
-    public function destroy(string $id)
-    {
-        //
+        if ($deleted) {
+            return response()->json(['Serviço deletado com sucesso!'], 200);
+        }
+
+        return response()->json(['O Serviço não foi deletado com sucesso!'], 400);
     }
 }

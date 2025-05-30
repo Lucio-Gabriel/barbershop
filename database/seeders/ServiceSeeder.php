@@ -13,6 +13,7 @@ class ServiceSeeder extends Seeder
     public function run(): void
     {
         Service::create([
+            'id'          => 1,
             'name'        => 'Corte Masculino',
             'description' => 'Corte de cabelo tradicional com tesoura e máquina.',
             'time'        => 30,
@@ -20,6 +21,7 @@ class ServiceSeeder extends Seeder
         ]);
 
         Service::create([
+            'id'          => 2,
             'name'        => 'Barba Completa',
             'description' => 'Modelagem e hidratação da barba com toalha quente.',
             'time'        => 25,
@@ -27,6 +29,7 @@ class ServiceSeeder extends Seeder
         ]);
 
         Service::create([
+            'id'          => 3,
             'name'        => 'Corte Degradê + Barba',
             'description' => 'Corte estilo degradê com finalização da barba.',
             'time'        => 45,
@@ -34,6 +37,7 @@ class ServiceSeeder extends Seeder
         ]);
 
         Service::create([
+            'id'          => 4,
             'name'        => 'Sobrancelha com Navalha',
             'description' => 'Design da sobrancelha com uso de navalha.',
             'time'        => 10,
@@ -41,6 +45,7 @@ class ServiceSeeder extends Seeder
         ]);
 
         Service::create([
+            'id'          => 5,
             'name'        => 'Corte Infantil',
             'description' => 'Corte de cabelo para crianças até 10 anos.',
             'time'        => 30,
