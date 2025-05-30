@@ -72,8 +72,14 @@ class ServiceController extends Controller
             ->setStatusCode(201);
     }
 
-    public function destroy(string $id)
+    public function destroy(Service $service)
     {
-        //
+        $deleted = $service->delete();
+
+        if ($deleted) {
+            return response()->json(['Serviço deletado com sucesso!'], 200);
+        }
+
+        return response()->json(['O Serviço não foi deletado com sucesso!'], 400);
     }
 }
