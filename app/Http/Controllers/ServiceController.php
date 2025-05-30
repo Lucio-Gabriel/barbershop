@@ -42,14 +42,34 @@ class ServiceController extends Controller
         return new ServiceResource(Service::where('id', $id)->first());
     }
 
-    public function edit(string $id)
+    public function update(Request $request, Service $service)
     {
-        //
-    }
+        $validator = Validator::make($request->all(), [
+            'name'        => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:255',
+            'time'        => 'required|numeric',
+            'price'       => 'required|numeric',
+        ]);
 
-    public function update(Request $request, string $id)
-    {
-        //
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $validated = $validator->validated();
+
+        $updated = $service->update([
+            'name'        => $validated['name'],
+            'description' => $validated['description'],
+            'time'        => $validated['time'],
+            'price'       => $validated['price'],
+        ]);
+
+        return (new ServiceResource($service))
+            ->additional(['message' => 'Serviço atualizado com sucesso!'])
+            ->response()
+            ->setStatusCode(201);
     }
 
     public function destroy(string $id)
