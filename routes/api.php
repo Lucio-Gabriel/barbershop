@@ -20,3 +20,5 @@ Route::put('/services/{service}', [ServiceController::class, 'update']);
 Route::delete('/services/{service}', [ServiceController::class, 'destroy']);
 
 Route::get('/barbers', [BarberController::class, 'index']);
+Route::post('/barbers', [BarberController::class, 'store']);
+Route::get('/barbers/{barber}', [BarberController::class, 'show']);
