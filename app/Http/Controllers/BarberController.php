@@ -20,7 +20,7 @@ class BarberController extends Controller
             'name'   => 'required|min:3|max:255',
             'email'  => 'required|min:3|max:255',
             'avatar' => 'max:255',
-            'rating' => 'required|numeric',
+            'rating' => 'required',
             'active' => 'required',
         ]);
 
@@ -43,13 +43,48 @@ class BarberController extends Controller
         return new BarberResource(Barber::where('id', $id)->first());
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, Barber $barber)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:3|max:255',
+            'email' => 'required|min:3|max:255',
+            'avatar' => 'max:255',
+            'rating' => 'required',
+            'active' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $validated = $validator->validate();
+
+        $updated = $barber->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'avatar' => $validated['avatar'],
+            'rating' => $validated['rating'],
+            'active' => $validated['active'],
+        ]);
+
+        return (new BarberResource($barber))
+            ->additional(['message' => 'Dados do barbeiro atualizado com sucesso.'])
+            ->response()
+            ->setStatusCode(201);
+
+
     }
 
-    public function destroy(string $id)
+    public function destroy(Barber $barber)
     {
-        //
+        $deleted = $barber->delete();
+
+        if ($deleted) {
+            return response()->json(['Barbeiro removido com sucesso.'], 200);
+        }
+
+        return response()->json(['Barbeiro não foi removido.'], 400);
     }
 }
