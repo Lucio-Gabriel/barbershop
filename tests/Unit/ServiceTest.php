@@ -3,23 +3,21 @@
 namespace Tests\Feature;
 
 use App\Models\Service;
-use App\Models\User;
-use Database\Factories\ServiceFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ServiceTest extends TestCase
 {
     use RefreshDatabase;
-   
+
     /** @test */
     public function it_creates_a_new_service()
     {
         $data = [
-            'name' => 'Corte social',
+            'name'        => 'Corte social',
             'description' => 'Corte social para adultos',
-            'time' => 45,
-            'price' => 300
+            'time'        => 45,
+            'price'       => 300,
         ];
 
         $response = $this->postJson('api/services', $data);
@@ -37,16 +35,16 @@ class ServiceTest extends TestCase
             ->assertJsonValidationErrors(['name', 'description', 'time', 'price']);
     }
 
-    /** @test */ 
+    /** @test */
     public function it_updates_an_alarm_type()
     {
         $service = Service::factory()->create();
 
         $updateService = [
-            'name' => 'Corte atualizado',
+            'name'        => 'Corte atualizado',
             'description' => 'Corte atualizado',
-            'time' => 50,
-            'price' => 100,
+            'time'        => 50,
+            'price'       => 100,
         ];
 
         $response = $this->putJson("/api/services/{$service->id}", $updateService);

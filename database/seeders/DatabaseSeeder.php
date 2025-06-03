@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
         User::factory(5)->create();
 
         $this->call(ServiceSeeder::class);
+        $this->call(BarberSeeder::class);
+
         // Service::factory(5)->create();
 
         // User::factory()->create([
