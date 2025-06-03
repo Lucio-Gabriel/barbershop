@@ -36,7 +36,7 @@ class ServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_updates_an_alarm_type()
+    public function it_updates_an_service()
     {
         $service = Service::factory()->create();
 
