@@ -46,8 +46,8 @@ class BarberController extends Controller
     public function update(Request $request, Barber $barber)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|min:3|max:255',
-            'email' => 'required|min:3|max:255',
+            'name'   => 'required|min:3|max:255',
+            'email'  => 'required|min:3|max:255',
             'avatar' => 'max:255',
             'rating' => 'required',
             'active' => 'required',
@@ -62,8 +62,8 @@ class BarberController extends Controller
         $validated = $validator->validate();
 
         $updated = $barber->update([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
+            'name'   => $validated['name'],
+            'email'  => $validated['email'],
             'avatar' => $validated['avatar'],
             'rating' => $validated['rating'],
             'active' => $validated['active'],
@@ -73,7 +73,6 @@ class BarberController extends Controller
             ->additional(['message' => 'Dados do barbeiro atualizado com sucesso.'])
             ->response()
             ->setStatusCode(201);
-
 
     }
 
