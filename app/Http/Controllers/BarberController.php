@@ -33,7 +33,7 @@ class BarberController extends Controller
         $created = Barber::create($validator->validated());
 
         return (new BarberResource($created))
-            ->additional(['messsage' => 'Perfil do barbeiro criado com sucesso.'])
+            ->additional(['message' => 'Perfil do barbeiro criado com sucesso.'])
             ->response()
             ->setStatusCode(201);
     }
